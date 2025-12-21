@@ -1,0 +1,285 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+html{
+  scroll-behavior: smooth;
+}
+body {
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 60px;   /* adjust if needed */
+  width: auto;
+}
+
+.brand-text {
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ff2f2f;
+}
+
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 70%);
+}
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Background video */
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Dark overlay for readability */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+/* Hero text content */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+
+.hero-content h1 {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.hero-content p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+.hero-tagline {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 25px;
+  opacity: 0.95;
+}
+
+
+
+.hero h1 {
+  font-size: 5rem;
+}
+
+.btn {
+  margin-top: 25px;
+  padding: 14px 42px;
+  border-radius: 50px;
+  border: 2px solid #8b5cf6;
+  color: white;
+  text-decoration: none;
+  background: transparent;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+
+.btn:hover {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  box-shadow: 0 0 25px #8b5cf6;
+  transform: translateY(-3px);
+}
+
+.btn:hover {
+  background: #ff2f2f;
+  box-shadow: 0 0 15px #ff2f2f;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 50px;
+  gap: 30px;
+}
+
+.product {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.4s ease;
+}
+
+.product:hover {
+  transform: scale(1.05);
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 38px;
+  }
+
+  .brand-text {
+    font-size: 1.6rem;
+  }
+}
+
+
+  .hero {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 70%);
+  }
+
+/* SHOP SECTION */
+.shop {
+  padding: 80px 8%;
+  background: #0d0d0d;
+}
+
+/* TITLE */
+.section-title {
+  text-align: center;
+  font-size: 2.6rem;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+/* GRID */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* PRODUCT CARD */
+.product {
+  background: #151515;
+  border-radius: 18px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-8px);
+}
+
+/* IMAGE — MOST IMPORTANT FIX */
+.product img {
+  width: 100%;
+  height: 340px;       /* controls size */
+  object-fit: cover;  /* prevents stretching */
+  display: block;
+}
+
+/* TEXT */
+.product h3 {
+  color: #fff;
+  margin: 15px 0 6px;
+}
+
+.price {
+  color: #aaa;
+  margin-bottom: 14px;
+}
+
+
+
+
