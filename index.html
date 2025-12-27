@@ -31,25 +31,21 @@
   <!-- ================= HERO SECTION ================= -->
   <section id="home" class="hero fade-in">
 
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline class="bg-video">
-    <source src="videos/hero-bg.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="videos/hero-bg.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-  <!-- Dark Overlay -->
-  <div class="overlay"></div>
+    <div class="overlay"></div>
 
-  <!-- Hero Content -->
-  <div class="hero-content">
-    <p class="hero-tagline">Streetwear That Defines You</p>
-    <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
-      Shop on Instagram
-    </a>
-  </div>
+    <div class="hero-content">
+      <p class="hero-tagline">Streetwear That Defines You</p>
+      <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
+        Shop on Instagram
+      </a>
+    </div>
 
-</section>
-
+  </section>
 
   <!-- ================= SHOP SECTION ================= -->
   <section id="shop" class="shop">
@@ -63,9 +59,7 @@
         <img src="images/image1.jpeg" alt="Oversized Louis Vuitton Tee">
         <h3>Oversized Louis Vuitton Tee</h3>
         <p class="price">₹699</p>
-        <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
-          Buy on Instagram
-        </a>
+        <button onclick="payNow('Oversized Louis Vuitton Tee', 699)">Buy Now</button>
       </div>
 
       <!-- Product 2 -->
@@ -73,9 +67,7 @@
         <img src="images/image2.jpeg" alt="Bazinga Street Tee">
         <h3>Bazinga Street Tee</h3>
         <p class="price">₹699</p>
-        <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
-          Buy on Instagram
-        </a>
+        <button onclick="payNow('Bazinga Street Tee', 699)">Buy Now</button>
       </div>
 
       <!-- Product 3 -->
@@ -83,21 +75,16 @@
         <img src="images/image3.jpeg" alt="Urban Fashion Tee">
         <h3>Urban Fashion Tee</h3>
         <p class="price">₹699</p>
-        <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
-          Buy on Instagram
-        </a>
+        <button onclick="payNow('Urban Fashion Tee', 699)">Buy Now</button>
       </div>
 
     </div>
   </section>
 
-
   <!-- ================= CONTACT SECTION ================= -->
   <section id="contact" class="contact hidden">
     <h2>Contact</h2>
-    <p>
-      DM us on Instagram for orders & queries
-    </p>
+    <p>DM us on Instagram for orders & queries</p>
     <a href="https://instagram.com/dripzystore_ghansoli" target="_blank" class="btn">
       @dripzystore_ghansoli
     </a>
@@ -108,7 +95,32 @@
     <p>© 2025 Dripzy Store. All Rights Reserved.</p>
   </footer>
 
+  <!-- ADDRESS MODAL -->
+  <div id="addressModal" class="modal">
+    <div class="modal-box">
+      <h3>Delivery Details</h3>
+      <select id="custSize">
+        <option value="">Select Size</option>
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+        <option value="XL">Extra Large</option>
+      </select>
+
+
+      <input id="custName" placeholder="Full Name">
+      <input id="custPhone" placeholder="Phone Number">
+      <textarea id="custAddress" placeholder="Full Address"></textarea>
+
+      <button onclick="startPayment()">Proceed to Pay</button>
+      <span class="close" onclick="closeModal()">Cancel</span>
+    </div>
+  </div>
+
+
   <!-- JS -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>
