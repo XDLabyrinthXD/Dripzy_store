@@ -23,6 +23,8 @@ let selectedAmount = 0;
 
 function payNow(product, amount) {
 
+  if (!product) return;
+
   const normalized = product.trim().toLowerCase();
 
   if (stockMap[normalized] === 0) {
@@ -39,12 +41,19 @@ function payNow(product, amount) {
 
 
 
+
 function closeModal() {
   const modal = document.getElementById("addressModal");
   if (modal) modal.style.display = "none";
 }
 
 function startPayment() {
+
+
+  if (!selectedProduct){
+    alert("No Product Selected.");
+    return;
+  }
 
   const normalized = selectedProduct.trim().toLowerCase();
 
@@ -105,7 +114,7 @@ function startPayment() {
 
 
 /* ===============================
-   STOCK CHECK (ARRAY FIXED)
+   STOCK CHECK (FINAL FIX)
 ================================ */
 
 fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec")
@@ -114,15 +123,13 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
 
     console.log("STOCK API DATA:", data);
 
-    // RESET map
-    stockMap = {};
+    stockMap = {}; // reset
 
-    // HANDLE ARRAY RESPONSE
     data.forEach(item => {
-      if (!item.Product || item.Stock === undefined) return;
+      if (!item.product || item.stock === undefined) return;
 
-      const key = item.Product.trim().toLowerCase();
-      stockMap[key] = Number(item.Stock);
+      const key = item.product.trim().toLowerCase();
+      stockMap[key] = Number(item.stock);
     });
 
     document.querySelectorAll(".product").forEach(card => {
@@ -131,16 +138,16 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
 
       if (!nameEl || !button) return;
 
-      const productName = nameEl.innerText.trim().toLowerCase();
+      const key = nameEl.innerText.trim().toLowerCase();
 
-      if (stockMap[productName] === 0) {
+      if (stockMap[key] === 0) {
         button.innerText = "Out of Stock";
         button.disabled = true;
         button.style.opacity = "0.5";
         button.style.cursor = "not-allowed";
+        button.onclick = null; // 💥 critical
       }
     });
-
   })
   .catch(err => console.error("Stock API error:", err));
 
