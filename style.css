@@ -370,7 +370,11 @@ nav a:hover {
   padding-left: 12px;
 }
 
-
-
+button.out-of-stock {
+  background: #444;
+  color: #aaa;
+  border: 1px solid #555;
+  cursor: not-allowed;
+}
 
 

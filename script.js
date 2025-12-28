@@ -20,6 +20,13 @@ let selectedProduct = "";
 let selectedAmount = 0;
 
 function payNow(product, amount) {
+
+  // 🔒 STOCK CHECK BEFORE OPENING MODAL
+  if (stockMap[product] === 0) {
+    alert("Sorry, this product is out of stock.");
+    return;
+  }
+
   selectedProduct = product;
   selectedAmount = amount;
 
@@ -45,6 +52,13 @@ function startPayment() {
 
   if (!name || !phone || !address || !size) {
     alert("Please fill all details including size");
+    return;
+  }
+
+  // 🔒 FINAL STOCK CHECK BEFORE PAYMENT
+  if (stockMap[selectedProduct] === 0) {
+    alert("This product just went out of stock.");
+    closeModal();
     return;
   }
 
@@ -88,20 +102,30 @@ function startPayment() {
 
 
 
+
 /* ===============================
    STOCK CHECK
 ================================ */
 
-fetch("https://script.google.com/macros/s/AKfycbwv1N77xg4XmhgHwXN8wpz7va8qTENT_uXAdvem4D8GLyYHECb9DvjqCoq_4Kc9kJ3I/exec")
+const STOCK_API_URL = "https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec";
+
+fetch(STOCK_API_URL)
   .then(res => res.json())
-  .then(stock => {
+  .then(data => {
+    const stockMap = {};
+
+    // Convert array → object
+    data.forEach(item => {
+      stockMap[item.Product.trim()] = Number(item.Stock);
+    });
+
     document.querySelectorAll(".product").forEach(card => {
       const name = card.querySelector("h3")?.innerText.trim();
       const button = card.querySelector("button");
 
       if (!name || !button) return;
 
-      if (stock[name] === 0) {
+      if (stockMap[name] === 0) {
         button.innerText = "Out of Stock";
         button.disabled = true;
         button.style.opacity = "0.5";
@@ -110,3 +134,4 @@ fetch("https://script.google.com/macros/s/AKfycbwv1N77xg4XmhgHwXN8wpz7va8qTENT_u
     });
   })
   .catch(err => console.error("Stock API error:", err));
+
