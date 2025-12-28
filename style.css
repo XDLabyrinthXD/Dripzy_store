@@ -244,30 +244,35 @@ nav a:hover {
 /* GRID */
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 30px;
+  margin-bottom: 60px;
 }
+
 
 /* PRODUCT CARD */
 .product {
   background: #151515;
-  border-radius: 18px;
-  overflow: hidden;
+  border-radius: 14px;
+  padding: 15px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
+
 
 /* IMAGE — MOST IMPORTANT FIX */
 .product img {
   width: 100%;
-  height: 340px;       /* controls size */
-  object-fit: cover;  /* prevents stretching */
-  display: block;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
 }
+
 
 /* TEXT */
 .product h3 {
@@ -347,6 +352,16 @@ nav a:hover {
   color: #aaa;
   cursor: pointer;
 }
+
+.category-title {
+  margin: 70px 0 25px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  border-left: 4px solid #8b5cf6;
+  padding-left: 12px;
+}
+
 
 
 
