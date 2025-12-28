@@ -23,9 +23,9 @@ let selectedAmount = 0;
 
 function payNow(product, amount) {
 
-  const normalizedProduct = product.trim().toLowerCase();
+  const normalized = product.trim().toLowerCase();
 
-  if (stockMap[normalizedProduct] === 0) {
+  if (stockMap[normalized] === 0) {
     alert("Sorry, this product is out of stock.");
     return;
   }
@@ -38,6 +38,7 @@ function payNow(product, amount) {
 
 
 
+
 function closeModal() {
   const modal = document.getElementById("addressModal");
   if (modal) modal.style.display = "none";
@@ -45,16 +46,16 @@ function closeModal() {
 
 function startPayment() {
   const normalizedProduct = selectedProduct.trim().toLowerCase();
+  if (stockMap[normalized] === 0) {
+    alert("This product is out of stock.");
+    closeModal();
+    return;
+  }
   const name = document.getElementById("custName").value;
   const phone = document.getElementById("custPhone").value;
   const address = document.getElementById("custAddress").value;
   const size = document.getElementById("custSize").value;
 
-  if (stockMap[normalizedProduct] === 0) {
-    alert("This product just went out of stock.");
-    closeModal();
-    return;
-  }
   if (!name || !phone || !address || !size) {
     alert("Please fill all details including size");
     return;
@@ -109,18 +110,24 @@ function startPayment() {
 
 
 /* ===============================
-   STOCK CHECK (FIXED)
+   STOCK CHECK (ARRAY FIXED)
 ================================ */
 
 fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec")
   .then(res => res.json())
-  .then(stock => {
+  .then(data => {
 
-    console.log("STOCK API:", stock);
+    console.log("STOCK API DATA:", data);
 
-    // stock is an OBJECT, not array
-    Object.keys(stock).forEach(key => {
-      stockMap[key.trim().toLowerCase()] = Number(stock[key]);
+    // RESET map
+    stockMap = {};
+
+    // HANDLE ARRAY RESPONSE
+    data.forEach(item => {
+      if (!item.Product || item.Stock === undefined) return;
+
+      const key = item.Product.trim().toLowerCase();
+      stockMap[key] = Number(item.Stock);
     });
 
     document.querySelectorAll(".product").forEach(card => {
@@ -141,3 +148,4 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
 
   })
   .catch(err => console.error("Stock API error:", err));
+
