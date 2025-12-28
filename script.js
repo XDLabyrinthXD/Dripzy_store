@@ -49,7 +49,7 @@ function startPayment() {
   }
 
   var options = {
-    key: "rzp_test_Rx211i6nWQSsrM",
+    key: "rzp_live_Rwi4QfRTCE6kAN",
     amount: selectedAmount * 100,
     currency: "INR",
     name: "Dripzy Store",
