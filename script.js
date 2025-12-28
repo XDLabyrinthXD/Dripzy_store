@@ -86,3 +86,27 @@ function startPayment() {
   rzp.open();
 }
 
+
+
+/* ===============================
+   STOCK CHECK
+================================ */
+
+fetch("https://script.google.com/macros/s/AKfycbwv1N77xg4XmhgHwXN8wpz7va8qTENT_uXAdvem4D8GLyYHECb9DvjqCoq_4Kc9kJ3I/exec")
+  .then(res => res.json())
+  .then(stock => {
+    document.querySelectorAll(".product").forEach(card => {
+      const name = card.querySelector("h3")?.innerText.trim();
+      const button = card.querySelector("button");
+
+      if (!name || !button) return;
+
+      if (stock[name] === 0) {
+        button.innerText = "Out of Stock";
+        button.disabled = true;
+        button.style.opacity = "0.5";
+        button.style.cursor = "not-allowed";
+      }
+    });
+  })
+  .catch(err => console.error("Stock API error:", err));
