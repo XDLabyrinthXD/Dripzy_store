@@ -1,6 +1,4 @@
-
 let stockMap = {};
-
 
 /* ===============================
    SCROLL ANIMATION
@@ -39,17 +37,18 @@ function payNow(product, amount) {
 }
 
 
+
 function closeModal() {
   const modal = document.getElementById("addressModal");
   if (modal) modal.style.display = "none";
 }
 
 function startPayment() {
+  const normalizedProduct = selectedProduct.trim().toLowerCase();
   const name = document.getElementById("custName").value;
   const phone = document.getElementById("custPhone").value;
   const address = document.getElementById("custAddress").value;
   const size = document.getElementById("custSize").value;
-  const normalizedProduct = selectedProduct.trim().toLowerCase();
 
   if (stockMap[normalizedProduct] === 0) {
     alert("This product just went out of stock.");
@@ -110,18 +109,18 @@ function startPayment() {
 
 
 /* ===============================
-   STOCK CHECK (FINAL VERSION)
+   STOCK CHECK (FIXED)
 ================================ */
 
 fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec")
   .then(res => res.json())
   .then(stock => {
 
-    console.log("STOCK API DATA:", stock); // 🔍 DEBUG
+    console.log("STOCK API:", stock);
 
-    stock.forEach(item => {
-      const name = item.Product.trim().toLowerCase();
-      stockMap[name] = Number(item.Stock);
+    // stock is an OBJECT, not array
+    Object.keys(stock).forEach(key => {
+      stockMap[key.trim().toLowerCase()] = Number(stock[key]);
     });
 
     document.querySelectorAll(".product").forEach(card => {
