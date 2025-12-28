@@ -1,3 +1,7 @@
+
+let stockMap = {};
+
+
 /* ===============================
    SCROLL ANIMATION
 ================================ */
@@ -21,8 +25,9 @@ let selectedAmount = 0;
 
 function payNow(product, amount) {
 
-  // 🔒 STOCK CHECK BEFORE OPENING MODAL
-  if (stockMap[product] === 0) {
+  const normalizedProduct = product.trim().toLowerCase();
+
+  if (stockMap[normalizedProduct] === 0) {
     alert("Sorry, this product is out of stock.");
     return;
   }
@@ -30,14 +35,9 @@ function payNow(product, amount) {
   selectedProduct = product;
   selectedAmount = amount;
 
-  const modal = document.getElementById("addressModal");
-  if (!modal) {
-    console.error("addressModal not found in DOM");
-    return;
-  }
-
-  modal.style.display = "flex";
+  document.getElementById("addressModal").style.display = "flex";
 }
+
 
 function closeModal() {
   const modal = document.getElementById("addressModal");
@@ -49,7 +49,13 @@ function startPayment() {
   const phone = document.getElementById("custPhone").value;
   const address = document.getElementById("custAddress").value;
   const size = document.getElementById("custSize").value;
+  const normalizedProduct = selectedProduct.trim().toLowerCase();
 
+  if (stockMap[normalizedProduct] === 0) {
+    alert("This product just went out of stock.");
+    closeModal();
+    return;
+  }
   if (!name || !phone || !address || !size) {
     alert("Please fill all details including size");
     return;
@@ -104,34 +110,35 @@ function startPayment() {
 
 
 /* ===============================
-   STOCK CHECK
+   STOCK CHECK (FINAL VERSION)
 ================================ */
 
-const STOCK_API_URL = "https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec";
-
-fetch(STOCK_API_URL)
+fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlVf-Gb5s6xoI3x-5MskyMg_0QyHhg5uHr772Sw/exec")
   .then(res => res.json())
-  .then(data => {
-    const stockMap = {};
+  .then(stock => {
 
-    // Convert array → object
-    data.forEach(item => {
-      stockMap[item.Product.trim()] = Number(item.Stock);
+    console.log("STOCK API DATA:", stock); // 🔍 DEBUG
+
+    stock.forEach(item => {
+      const name = item.Product.trim().toLowerCase();
+      stockMap[name] = Number(item.Stock);
     });
 
     document.querySelectorAll(".product").forEach(card => {
-      const name = card.querySelector("h3")?.innerText.trim();
+      const nameEl = card.querySelector("h3");
       const button = card.querySelector("button");
 
-      if (!name || !button) return;
+      if (!nameEl || !button) return;
 
-      if (stockMap[name] === 0) {
+      const productName = nameEl.innerText.trim().toLowerCase();
+
+      if (stockMap[productName] === 0) {
         button.innerText = "Out of Stock";
         button.disabled = true;
         button.style.opacity = "0.5";
         button.style.cursor = "not-allowed";
       }
     });
+
   })
   .catch(err => console.error("Stock API error:", err));
-
