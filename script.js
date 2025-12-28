@@ -45,12 +45,15 @@ function closeModal() {
 }
 
 function startPayment() {
-  const normalizedProduct = selectedProduct.trim().toLowerCase();
+
+  const normalized = selectedProduct.trim().toLowerCase();
+
   if (stockMap[normalized] === 0) {
     alert("This product is out of stock.");
     closeModal();
     return;
   }
+
   const name = document.getElementById("custName").value;
   const phone = document.getElementById("custPhone").value;
   const address = document.getElementById("custAddress").value;
@@ -58,13 +61,6 @@ function startPayment() {
 
   if (!name || !phone || !address || !size) {
     alert("Please fill all details including size");
-    return;
-  }
-
-  // 🔒 FINAL STOCK CHECK BEFORE PAYMENT
-  if (stockMap[selectedProduct] === 0) {
-    alert("This product just went out of stock.");
-    closeModal();
     return;
   }
 
@@ -76,7 +72,6 @@ function startPayment() {
     description: selectedProduct,
 
     handler: function (response) {
-
       fetch("https://script.google.com/macros/s/AKfycbwsB8Qh_h721E1P0pW4xiT4UYKIoAcZdy-4ylMEZESXO25wiSY-TEaghtP30vN7DHAUAA/exec", {
         method: "POST",
         body: JSON.stringify({
@@ -102,9 +97,9 @@ function startPayment() {
     }
   };
 
-  var rzp = new Razorpay(options);
-  rzp.open();
+  new Razorpay(options).open();
 }
+
 
 
 
