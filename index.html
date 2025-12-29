@@ -25,6 +25,9 @@
       <a href="#shop">Shop</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <button id="loginBtn" class="login-btn" onclick="openLogin()">
+        Sign In
+      </button>
     </nav>
   </header>
 
@@ -200,9 +203,33 @@
   </div>
 
 
-  <!-- JS -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="script.js"></script>
+
+
+
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="modal">
+    <div class="modal-box">
+      <h3>Sign in to DRIPZY</h3>
+
+      <button id="googleLogin" class="google-btn">
+        Continue with Google
+      </button>
+
+      <span id="closeLogin" class="close">Cancel</span>
+    </div>
+  </div>
+
+
+<!-- Firebase SDKs (COMPAT versions) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<!-- JS -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="script.js"></script>
+
+
+
 
 </body>
 </html>

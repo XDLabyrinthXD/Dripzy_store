@@ -1,3 +1,20 @@
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyARIYaMb--RSKu_x4PWidybaBrjuX-9gb8",
+  authDomain: "dripzy-store.firebaseapp.com",
+  projectId: "dripzy-store",
+  storageBucket: "dripzy-store.firebasestorage.app",
+  messagingSenderId: "663133645300",
+  appId: "1:663133645300:web:9040e3ed4db6bf6bc4b1a1"
+});
+
+// Firebase Auth reference
+const auth = firebase.auth();
+
+
+
+
+
 let stockMap = {};
 
 /* ===============================
@@ -151,3 +168,46 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
   })
   .catch(err => console.error("Stock API error:", err));
 
+  // LOGIN MODAL CONTROLS
+const loginBtn = document.getElementById("loginBtn");
+const loginModal = document.getElementById("loginModal");
+const closeLoginBtn = document.getElementById("closeLogin");
+
+// Open modal
+if (loginBtn) {
+  loginBtn.addEventListener("click", () => {
+    loginModal.style.display = "flex";
+  });
+}
+
+// Close modal
+if (closeLoginBtn) {
+  closeLoginBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+}
+
+// Optional functions (for checkout trigger later)
+function openLogin() {
+  loginModal.style.display = "flex";
+}
+
+function closeLogin() {
+  loginModal.style.display = "none";
+}
+
+const googleLoginBtn = document.getElementById("googleLogin");
+
+googleLoginBtn.addEventListener("click", () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      alert(`Welcome ${user.displayName}`);
+      closeLogin();
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+});

@@ -377,4 +377,65 @@ button.out-of-stock {
   cursor: not-allowed;
 }
 
+.login-btn {
+  margin-left: 15px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #7c3aed;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.login-btn:hover {
+  background: #7c3aed;
+}
+
+/* ===== LOGIN MODAL ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #111;
+  padding: 30px;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.modal-box h3 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+}
+
+.close {
+  display: block;
+  margin-top: 15px;
+  color: #aaa;
+  cursor: pointer;
+}
+
 
