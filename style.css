@@ -437,38 +437,3 @@ button.out-of-stock {
   color: #aaa;
   cursor: pointer;
 }
-
-/* ===== USER PROFILE IN NAVBAR ===== */
-.user-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 15px;
-}
-
-.user-box img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-box span {
-  color: #fff;
-  font-size: 14px;
-}
-
-#logoutBtn {
-  background: transparent;
-  border: 1px solid #7c3aed;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-#logoutBtn:hover {
-  background: #7c3aed;
-}
-

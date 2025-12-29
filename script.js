@@ -168,7 +168,7 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
   })
   .catch(err => console.error("Stock API error:", err));
 
-// LOGIN MODAL CONTROLS
+  // LOGIN MODAL CONTROLS
 const loginBtn = document.getElementById("loginBtn");
 const loginModal = document.getElementById("loginModal");
 const closeLoginBtn = document.getElementById("closeLogin");
