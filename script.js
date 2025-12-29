@@ -168,8 +168,50 @@ fetch("https://script.google.com/macros/s/AKfycbwJFKfqpzPNmr1AiRjQvkHZQwMOA6VhlV
   })
   .catch(err => console.error("Stock API error:", err));
 
-// ================= FIREBASE IMPORTS =================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+// LOGIN MODAL CONTROLS
+const loginBtn = document.getElementById("loginBtn");
+const loginModal = document.getElementById("loginModal");
+const closeLoginBtn = document.getElementById("closeLogin");
+
+// Open modal
+if (loginBtn) {
+  loginBtn.addEventListener("click", () => {
+    loginModal.style.display = "flex";
+  });
+}
+
+// Close modal
+if (closeLoginBtn) {
+  closeLoginBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+}
+
+// Optional functions (for checkout trigger later)
+function openLogin() {
+  loginModal.style.display = "flex";
+}
+
+function closeLogin() {
+  loginModal.style.display = "none";
+}
+
+const googleLoginBtn = document.getElementById("googleLogin");
+
+googleLoginBtn.addEventListener("click", () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      alert(`Welcome ${user.displayName}`);
+      closeLogin();
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+});
+
 import {
   getAuth,
   GoogleAuthProvider,
@@ -178,69 +220,40 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// ================= FIREBASE CONFIG =================
-const firebaseConfig = {
-  apiKey: "AIzaSyARIYaMb--RSKu_x4PWidybaBrjuX-9gb8",
-  authDomain: "dripzy-store.firebaseapp.com",
-  projectId: "dripzy-store",
-  storageBucket: "dripzy-store.firebasestorage.app",
-  messagingSenderId: "663133645300",
-  appId: "1:663133645300:web:9040e3ed4db6bf6bc4b1a1"
-};
-
-// ================= INIT =================
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-// ================= ELEMENTS =================
-const loginBtn = document.getElementById("loginBtn");
-const loginModal = document.getElementById("loginModal");
-const closeLoginBtn = document.getElementById("closeLogin");
-const googleLoginBtn = document.getElementById("googleLogin");
-const userBox = document.getElementById("userBox");
-const userName = document.getElementById("userName");
-const userPhoto = document.getElementById("userPhoto");
-const logoutBtn = document.getElementById("logoutBtn");
-
-// ================= MODAL =================
-loginBtn?.addEventListener("click", () => {
-  loginModal.style.display = "flex";
-});
-
-closeLoginBtn?.addEventListener("click", () => {
-  loginModal.style.display = "none";
-});
-
-function closeLogin() {
-  loginModal.style.display = "none";
-}
-
-// ================= GOOGLE LOGIN =================
-googleLoginBtn?.addEventListener("click", () => {
+// LOGIN
+document.getElementById("googleLogin").addEventListener("click", () => {
   signInWithPopup(auth, provider)
     .then(() => {
       closeLogin();
     })
-    .catch(err => alert(err.message));
+    .catch(err => {
+      alert(err.message);
+    });
 });
 
-// ================= AUTH STATE =================
+// AUTH STATE CHANGE
 onAuthStateChanged(auth, (user) => {
+  const loginBtn = document.getElementById("loginBtn");
+  const userBox = document.getElementById("userBox");
+
   if (user) {
+    // User logged in
     loginBtn.style.display = "none";
     userBox.style.display = "flex";
 
-    userName.innerText = user.displayName;
-    userPhoto.src = user.photoURL;
+    document.getElementById("userName").innerText = user.displayName;
+    document.getElementById("userPhoto").src = user.photoURL;
   } else {
+    // User logged out
     loginBtn.style.display = "inline-block";
     userBox.style.display = "none";
   }
 });
 
-// ================= LOGOUT =================
-logoutBtn?.addEventListener("click", () => {
+// LOGOUT
+document.getElementById("logoutBtn").addEventListener("click", () => {
   signOut(auth);
 });
-
