@@ -25,11 +25,18 @@
       <a href="#shop">Shop</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <button id="loginBtn" class="login-btn" onclick="openLogin()">
-        Sign In
-      </button>
+
+      <!-- LOGIN BUTTON -->
+      <button id="loginBtn" class="login-btn">Sign In</button>
+
+      <!-- USER INFO (hidden by default) -->
+      <div id="userBox" class="user-box" style="display: none;">
+        <img id="userPhoto" src="" alt="User" />
+        <span id="userName"></span>
+        <button id="logoutBtn">Logout</button>
+      </div>
     </nav>
-  </header>
+
 
   <!-- ================= HERO SECTION ================= -->
   <section id="home" class="hero fade-in">
@@ -226,7 +233,8 @@
 
 <!-- JS -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
+
 
 
 
