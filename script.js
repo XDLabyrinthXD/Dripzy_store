@@ -211,3 +211,49 @@ googleLoginBtn.addEventListener("click", () => {
       alert(error.message);
     });
 });
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+
+// LOGIN
+document.getElementById("googleLogin").addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then(() => {
+      closeLogin();
+    })
+    .catch(err => {
+      alert(err.message);
+    });
+});
+
+// AUTH STATE CHANGE
+onAuthStateChanged(auth, (user) => {
+  const loginBtn = document.getElementById("loginBtn");
+  const userBox = document.getElementById("userBox");
+
+  if (user) {
+    // User logged in
+    loginBtn.style.display = "none";
+    userBox.style.display = "flex";
+
+    document.getElementById("userName").innerText = user.displayName;
+    document.getElementById("userPhoto").src = user.photoURL;
+  } else {
+    // User logged out
+    loginBtn.style.display = "inline-block";
+    userBox.style.display = "none";
+  }
+});
+
+// LOGOUT
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  signOut(auth);
+});
